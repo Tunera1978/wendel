@@ -11,15 +11,15 @@ package aula5;
  */
 public class contaBancaria {
 
-    private String numeroConta;
+    private int numeroConta;
     private double saldo;
     private String historico;
 
-    public String getNumeroConta() {
+    public int getNumeroConta() {
         return numeroConta;
     }
 
-    public void setNumeroConta(String numeroConta) {
+    public void setNumeroConta(int numeroConta) {
         this.numeroConta = numeroConta;
     }
 
@@ -38,6 +38,8 @@ public class contaBancaria {
     public void setHistorico(String historico) {
         this.historico = historico;
     }
+
+   
 
     public void depositar(double saldo) {
         this.saldo = this.saldo + saldo;
