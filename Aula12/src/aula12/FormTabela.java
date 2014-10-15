@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package aula12;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -42,6 +42,9 @@ public class FormTabela extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAlunos = new javax.swing.JTable();
+        btnExcluir = new javax.swing.JButton();
+        btnExcluirVarios = new javax.swing.JButton();
+        tblLimparTabela = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tabela");
@@ -77,6 +80,27 @@ public class FormTabela extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(tblAlunos);
+
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
+        btnExcluirVarios.setText("Multi Exclusão");
+        btnExcluirVarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirVariosActionPerformed(evt);
+            }
+        });
+
+        tblLimparTabela.setText("Limpar Tabela");
+        tblLimparTabela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tblLimparTabelaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,6 +141,14 @@ public class FormTabela extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane1)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnExcluir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnExcluirVarios)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tblLimparTabela)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,8 +174,13 @@ public class FormTabela extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnExcluir)
+                    .addComponent(btnExcluirVarios)
+                    .addComponent(tblLimparTabela))
+                .addGap(6, 6, 6))
         );
 
         pack();
@@ -159,19 +196,47 @@ public class FormTabela extends javax.swing.JFrame {
         String nome = txtNome.getText();
         String curso = cmbCurso.getSelectedItem().toString();
         String semestre = txtSemestre.getText();
-        
-        DefaultTableModel tabelaAlunos = (DefaultTableModel)tblAlunos.getModel();
+
+        DefaultTableModel tabelaAlunos = (DefaultTableModel) tblAlunos.getModel();
         Object[] obj = new Object[]{
             nome,
             curso,
             semestre
         };
         tabelaAlunos.addRow(obj);
-        
+
         txtNome.setText("");
         txtSemestre.setText("");
-        
+
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // TODO add your handling code here:
+        int linhaSelecionada = tblAlunos.getSelectedRow();
+        if (linhaSelecionada >= 0) {
+            DefaultTableModel tabelaAlunos = (DefaultTableModel) tblAlunos.getModel();
+            tabelaAlunos.removeRow(linhaSelecionada);
+        }else{
+            JOptionPane.showMessageDialog(null,"Selecione uma Linha da tabela ! ");
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnExcluirVariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirVariosActionPerformed
+        // TODO add your handling code here:
+        int[] linhas = tblAlunos.getSelectedRows();
+        DefaultTableModel tabelaAlunos = (DefaultTableModel) tblAlunos.getModel();
+        for (int i = linhas.length -1 ; i >= 0; i--) {
+            tabelaAlunos.removeRow(linhas[i]);
+        }
+        
+    }//GEN-LAST:event_btnExcluirVariosActionPerformed
+
+    private void tblLimparTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tblLimparTabelaActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel tabelaAlunos = (DefaultTableModel) tblAlunos.getModel();
+        tabelaAlunos.setNumRows(0);
+        
+    }//GEN-LAST:event_tblLimparTabelaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,6 +274,8 @@ public class FormTabela extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnExcluirVarios;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox cmbCurso;
     private javax.swing.JLabel jLabel1;
@@ -219,6 +286,7 @@ public class FormTabela extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable tblAlunos;
+    private javax.swing.JButton tblLimparTabela;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtSemestre;
     // End of variables declaration//GEN-END:variables
